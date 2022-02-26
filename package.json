@@ -1,0 +1,76 @@
+{
+  "name": "mockoon-webpack-plugin",
+  "version": "1.0.0",
+  "description": "A Webpack plugin to run Mockoon CLI.",
+  "homepage": "https://github.com/pzanella/mockoon-webpack-plugin",
+  "main": "dist/index.js",
+  "author": "Pietro Zanella <pietrozanella22@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "files": [
+    "dist/constants.js",
+    "dist/index.js",
+    "dist/logger.js",
+    "dist/schema.json",
+    "dist/utils.js",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
+  "keywords": [
+    "webpack",
+    "plugin",
+    "mockoon",
+    "cli",
+    "mock",
+    "server",
+    "local"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "@mockoon/cli": "^1.5.1",
+    "chalk": "4.1.2",
+    "find-free-ports": "^3.0.0",
+    "schema-utils": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@types/jest": "^27.4.1",
+    "babel-jest": "^27.5.1",
+    "eslint": "^8.9.0",
+    "eslint-plugin-jest": "^26.1.1",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "lint-staged": "^12.3.4",
+    "prettier": "^2.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pzanella/mockoon-webpack-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pzanella/mockoon-webpack-plugin/issues"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "prettier --write"
+    ]
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverageFrom": [
+      "dist/**/*.js",
+      "!dist/constants.js",
+      "!dist/logger.js",
+      "!dist/schema.json",
+      "!dist/index.js"
+    ]
+  }
+}
