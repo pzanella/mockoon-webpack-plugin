@@ -29,7 +29,8 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "badges": "generateBadges"
+    "badges": "generateBadges",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@mockoon/cli": "^1.5.1",
