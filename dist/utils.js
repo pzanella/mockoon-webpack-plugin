@@ -31,6 +31,15 @@ const isFolderExist = (path) => {
 };
 
 /**
+ * @param {String} path
+ */
+const createFolder = (path) => {
+  if (!isFolderExist(path)) {
+    fs.mkdirSync(path);
+  }
+};
+
+/**
  * @param {String} [path]
  * @returns {Array<String>} List files in path
  */
@@ -100,6 +109,7 @@ module.exports = {
   createJSONFile,
   hasFiles,
   isFolderExist,
+  createFolder,
   getCommandLineArgs,
   getPname,
   getPort,

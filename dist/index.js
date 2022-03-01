@@ -1,6 +1,5 @@
 const { validate } = require("schema-utils");
 const mockoon = require("@mockoon/cli");
-const fs = require("fs");
 
 const schema = require("./schema");
 const utils = require("./utils");
@@ -74,9 +73,7 @@ class MockoonWebpackPlugin {
           );
 
           if ("mocks" in option || !option?.data) {
-            if (!utils.isFolderExist(DEFAULT.dirname)) {
-              fs.mkdirSync(DEFAULT.dirname);
-            }
+            utils.createFolder(DEFAULT.dirname);
           }
 
           if ("mocks" in option) {

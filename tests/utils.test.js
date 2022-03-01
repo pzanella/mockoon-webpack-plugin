@@ -103,6 +103,31 @@ describe("utils file", () => {
     });
   });
 
+  describe("createFolder()", () => {
+    const path = `${process.cwd()}/unit-test`;
+
+    test("should be created a folder", () => {
+      expect(fs.existsSync(path)).toBeFalsy();
+
+      utils.createFolder(path);
+
+      expect(fs.existsSync(path)).toBeTruthy();
+    });
+
+    test("the folder already exists", () => {
+      fs.mkdirSync(path);
+      expect(fs.existsSync(path)).toBeTruthy();
+
+      utils.createFolder(path);
+    });
+
+    afterEach(() => {
+      fs.rmSync(path, { recursive: true, force: true });
+
+      expect(fs.existsSync(path)).toBeFalsy();
+    });
+  });
+
   describe("getCommandLineArgs()", () => {
     test("should be returns an empty array", () => {
       const args = utils.getCommandLineArgs();
