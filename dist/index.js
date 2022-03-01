@@ -74,19 +74,19 @@ class MockoonWebpackPlugin {
           );
 
           if ("mocks" in option || !option?.data) {
-            if (!utils.isFolderExist()) {
+            if (!utils.isFolderExist(DEFAULT.dirname)) {
               fs.mkdirSync(DEFAULT.dirname);
             }
           }
 
           if ("mocks" in option) {
             this.#options[index].repair = true;
-            const filepath = utils.createJSONFile(option);
+            const filepath = utils.createJSONFile(option, DEFAULT.dirname);
             this.#options[index].data = filepath;
             delete option.mocks;
           } else {
             if (!option?.data) {
-              const files = utils.hasFiles();
+              const files = utils.hasFiles(DEFAULT.dirname);
               if (files.length === this.#options.length) {
                 this.#options[
                   index

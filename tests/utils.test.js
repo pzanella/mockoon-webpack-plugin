@@ -4,10 +4,23 @@ jest.mock("../dist/logger.js");
 
 describe("utils file", () => {
   describe("createJSONFile()", () => {
-    test("should be returns an error", () => {
+    test("should be returns an error because options is an empty object", () => {
       try {
         const options = {};
-        utils.createJSONFile(options);
+        const path = `${process.cwd()}/mockoon_unit-test`;
+        utils.createJSONFile(options, path);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(typeof error).toBe("string");
+        expect(error).toBe("The object is empty!");
+      }
+    });
+
+    test("should be returns an error because options is undefined", () => {
+      try {
+        const options = undefined;
+        const path = `${process.cwd()}/mockoon_unit-test`;
+        utils.createJSONFile(options, path);
       } catch (error) {
         expect(error).toBeDefined();
         expect(typeof error).toBe("string");
@@ -98,14 +111,14 @@ describe("utils file", () => {
     });
 
     test("should be returns the arguments array", () => {
-      const options = {
+      let options = {
         data: process.cwd(),
         pname: "mockoon-pname",
         port: 3000,
         daemonOff: true,
       };
 
-      const args = utils.getCommandLineArgs(options);
+      let args = utils.getCommandLineArgs(options);
       expect(args).toBeDefined();
       expect(args.length).toBe(4);
       expect(args[0]).toBe(`--data=${process.cwd()}`);
@@ -116,6 +129,20 @@ describe("utils file", () => {
       expect(typeof args[2]).toBe("string");
       expect(args[3]).toBe("--daemon-off");
       expect(typeof args[3]).toBe("string");
+
+      options.daemonOff = false;
+      args = utils.getCommandLineArgs(options);
+      expect(args).toBeDefined();
+      expect(args.length).toBe(3);
+      expect(args[0]).toBe(`--data=${process.cwd()}`);
+      expect(typeof args[0]).toBe("string");
+      expect(args[1]).toBe("--pname=mockoon-pname");
+      expect(typeof args[1]).toBe("string");
+      expect(args[2]).toBe("--port=3000");
+      expect(typeof args[2]).toBe("string");
+
+      const expected = ["--daemon-off"];
+      expect(args).not.toEqual(expect.arrayContaining(expected));
     });
   });
 

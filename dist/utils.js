@@ -2,15 +2,15 @@ const fs = require("fs");
 const { findFreePorts, isFreePort } = require("find-free-ports");
 
 const { logger } = require("./logger");
-const { REMAP_FIELD, DEFAULT } = require("./constants");
+const { REMAP_FIELD } = require("./constants");
 
 /**
  * Create in path a JSON file from option.mocks object that contains Mockoon's configuration.
  * @param {{mocks: Object, pname: string}} [option]
- * @param {String} [path] - Default constants.DEFAULT.dirname
+ * @param {String} [path]
  * @returns {String} Absolute file path
  */
-const createJSONFile = (option = {}, path = DEFAULT.dirname) => {
+const createJSONFile = (option = {}, path) => {
   if (Object.entries(option).length === 0) {
     throw `The object is empty!`;
   }
@@ -26,7 +26,7 @@ const createJSONFile = (option = {}, path = DEFAULT.dirname) => {
  * @param {String} [path]
  * @returns {Boolean} Folder exists or not
  */
-const isFolderExist = (path = DEFAULT.dirname) => {
+const isFolderExist = (path) => {
   return fs.existsSync(path);
 };
 
@@ -34,7 +34,7 @@ const isFolderExist = (path = DEFAULT.dirname) => {
  * @param {String} [path]
  * @returns {Array<String>} List files in path
  */
-const hasFiles = (path = DEFAULT.dirname) => {
+const hasFiles = (path) => {
   return fs.readdirSync(path);
 };
 
@@ -102,5 +102,5 @@ module.exports = {
   isFolderExist,
   getCommandLineArgs,
   getPname,
-  getPort
+  getPort,
 };
