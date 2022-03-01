@@ -97,10 +97,10 @@ const getPort = async (option = {}, devServer = {}) => {
 };
 
 module.exports = {
+  createJSONFile,
   hasFiles,
   isFolderExist,
   getCommandLineArgs,
   getPname,
-  getPort,
-  createJSONFile,
+  getPort
 };

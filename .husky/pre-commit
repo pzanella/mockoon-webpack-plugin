@@ -3,3 +3,5 @@
 
 npx lint-staged
 yarn test
+yarn badges
+git add badges

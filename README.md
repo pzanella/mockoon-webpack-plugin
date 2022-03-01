@@ -3,7 +3,7 @@
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 [![nodejs-version](https://img.shields.io/badge/Node-%3E=16.0.0-4dc71f?logo=nodedotjs)](https://nodejs.org/download/release/v16.0.0/)
-[![unit-test](https://img.shields.io/badge/Unit%20test-Jest-C63D14?logo=jest)](https://jestjs.io/)
+![Jest coverage](./badges/coverage-jest%20coverage.svg)
 
 A Webpack plugin based on Mockoon CLI that simplifies creation mock(s) server to give APIs on localhost and stop it when close Webpack dev server.
 
