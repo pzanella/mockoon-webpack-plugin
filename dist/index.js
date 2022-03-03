@@ -62,58 +62,62 @@ class MockoonWebpackPlugin {
     this.#options = !Array.isArray(options) ? [options] : options;
   }
 
+  async optionsHandler(option = {}, devServer = {}, path) {
+    if (
+      Object.keys(option).length === 0 ||
+      Object.keys(devServer).length === 0 ||
+      !utils.isFolderExist(path)
+    ) {
+      return;
+    }
+
+    const pname = utils.getPname(option);
+
+    return {
+      data:
+        "mocks" in option
+          ? utils.createJSONFile(option, path)
+          : !option?.data
+          ? `${path}/${utils
+              .hasFiles(path)
+              .find((el) => el === `${pname}.json`)}`
+          : option.data,
+      pname,
+      port: await utils.getPort(option, devServer),
+      repair: true,
+      daemonOff: true,
+    };
+  }
+
   apply(compiler) {
-    compiler.hooks.initialize.tap(DEFAULT.pluginName, () => {
-      this.#options.forEach(async (option, index) => {
-        try {
-          this.#options[index].pname = utils.getPname(option);
-          this.#options[index].port = await utils.getPort(
+    if (!process.env.WEBPACK_SERVE) {
+      return;
+    }
+
+    compiler.hooks.initialize.tap(DEFAULT.pluginName, async () => {
+      try {
+        for (const option of this.#options) {
+          const opt = await this.optionsHandler(
             option,
-            compiler.options?.devServer
+            compiler.options?.devServer,
+            DEFAULT.dirname
           );
 
-          if ("mocks" in option || !option?.data) {
-            utils.createFolder(DEFAULT.dirname);
+          if (!opt.data) {
+            throw `Please, add one or more file inside ${DEFAULT.dirname} folder like as [pname].json, pass a path or an url to data attribute or use mocks object within plugin's configuration.`;
           }
 
-          if ("mocks" in option) {
-            this.#options[index].repair = true;
-            const filepath = utils.createJSONFile(option, DEFAULT.dirname);
-            this.#options[index].data = filepath;
-            delete option.mocks;
-          } else {
-            if (!option?.data) {
-              const files = utils.hasFiles(DEFAULT.dirname);
-              if (files.length === this.#options.length) {
-                this.#options[
-                  index
-                ].data = `${DEFAULT.dirname}/${files[index]}`;
-              } else {
-                throw `There are ${files.length} file(s) in ${
-                  DEFAULT.dirname
-                } folder for ${
-                  this.#options.length
-                } plugin's object(s). Which files do you want to load? Please, set data attribute within plugin's object.`;
-              }
-            }
-          }
-
-          this.#options[index].daemonOff = true;
-          logger.log(JSON.stringify(option));
-          await mockoon.run(["start", ...utils.getCommandLineArgs(option)]);
-        } catch (error) {
-          logger.error(error);
+          logger.log(JSON.stringify(opt));
+          await mockoon.run(["start", ...utils.getCommandLineArgs(opt)]);
         }
-      });
-    });
-
-    compiler.hooks.shutdown.tap(DEFAULT.pluginName, () => {
-      try {
-        this.#options.forEach(async (option) => {
-          await mockoon.run(["stop", option.pname]);
-        });
       } catch (error) {
         logger.error(error);
+      }
+    });
+
+    compiler.hooks.shutdown.tap(DEFAULT.pluginName, async () => {
+      for (const option of this.#options) {
+        await mockoon.run(["stop", option.pname]);
       }
     });
   }

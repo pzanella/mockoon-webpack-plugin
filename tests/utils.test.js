@@ -49,10 +49,6 @@ describe("utils file", () => {
 
       const path = `${process.cwd()}/mockoon_unit-test`;
 
-      if (!utils.isFolderExist(path)) {
-        fs.mkdirSync(path);
-      }
-
       const filepath = utils.createJSONFile(options, path);
       expect(filepath).toBeDefined();
       expect(typeof filepath).toBe("string");
@@ -100,31 +96,6 @@ describe("utils file", () => {
 
     afterEach(() => {
       fs.rmSync(path, { recursive: true, force: true });
-    });
-  });
-
-  describe("createFolder()", () => {
-    const path = `${process.cwd()}/unit-test`;
-
-    test("should be created a folder", () => {
-      expect(fs.existsSync(path)).toBeFalsy();
-
-      utils.createFolder(path);
-
-      expect(fs.existsSync(path)).toBeTruthy();
-    });
-
-    test("the folder already exists", () => {
-      fs.mkdirSync(path);
-      expect(fs.existsSync(path)).toBeTruthy();
-
-      utils.createFolder(path);
-    });
-
-    afterEach(() => {
-      fs.rmSync(path, { recursive: true, force: true });
-
-      expect(fs.existsSync(path)).toBeFalsy();
     });
   });
 

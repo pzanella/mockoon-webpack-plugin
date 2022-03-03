@@ -15,6 +15,8 @@ const createJSONFile = (option = {}, path) => {
     throw `The object is empty!`;
   }
 
+  createFolder(path);
+
   const { mocks: content, pname } = option;
   const filepath = `${path}/${pname}.json`;
 
@@ -30,9 +32,6 @@ const isFolderExist = (path) => {
   return fs.existsSync(path);
 };
 
-/**
- * @param {String} path
- */
 const createFolder = (path) => {
   if (!isFolderExist(path)) {
     fs.mkdirSync(path);
@@ -109,7 +108,6 @@ module.exports = {
   createJSONFile,
   hasFiles,
   isFolderExist,
-  createFolder,
   getCommandLineArgs,
   getPname,
   getPort,

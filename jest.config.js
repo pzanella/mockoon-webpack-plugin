@@ -5,7 +5,6 @@ module.exports = {
     "dist/**/*.js",
     "!dist/constants.js",
     "!dist/schema.json",
-    "!dist/index.js",
   ],
   coverageThreshold: {
     global: {

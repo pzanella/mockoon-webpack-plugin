@@ -24,13 +24,15 @@
     "plugin",
     "mockoon-cli",
     "mock-server",
-    "local-server"
+    "local-server",
+    "mockoon-webpack-plugin"
   ],
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
     "badges": "generateBadges",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "np --tag"
   },
   "dependencies": {
     "@mockoon/cli": "^1.5.1",
@@ -47,6 +49,7 @@
     "jest": "^27.5.1",
     "lint-staged": "^12.3.4",
     "node-jest-badges": "^1.3.1",
+    "np": "^7.6.0",
     "prettier": "^2.5.1"
   },
   "peerDependencies": {
