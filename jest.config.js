@@ -14,5 +14,5 @@ module.exports = {
       statements: 100,
     },
   },
-  coverageReporters: ["json-summary"],
+  coverageReporters: ["text", "json-summary"],
 };

@@ -104,7 +104,9 @@ class MockoonWebpackPlugin {
           );
 
           if (!opt.data) {
-            throw `Please, add one or more file inside ${DEFAULT.dirname} folder like as [pname].json, pass a path or an url to data attribute or use mocks object within plugin's configuration.`;
+            throw new Error(
+              `Please, add one or more file inside ${DEFAULT.dirname} folder like as [pname].json, pass a path or an url to data attribute or use mocks object within plugin's configuration.`
+            );
           }
 
           logger.log(JSON.stringify(opt));

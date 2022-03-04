@@ -5,6 +5,7 @@ jest.mock("@mockoon/cli");
 mockoon.run = jest.fn();
 
 const { MockoonWebpackPlugin } = require("../dist/index");
+const { logger } = require("../dist/logger");
 
 describe("index file", () => {
   let mockoonWebpackPlugin, options;
@@ -188,25 +189,19 @@ describe("index file", () => {
 
   describe("apply() function, options as list and process.env.WEBPACK_SERVE equals true", () => {
     const originalProcessEnv = process.env;
-    let consoleObject, compiler;
+    let compiler;
 
     beforeAll(() => {
       mockoonWebpackPlugin = null;
       expect(mockoonWebpackPlugin).toBeNull();
 
-      process.env = { ...originalProcessEnv };
+      process.env = { ...originalProcessEnv, WEBPACK_SERVE: true };
 
-      consoleObject = console;
-
-      // eslint-disable-next-line
-      console = {
-        log: jest.fn(),
-        warn: jest.fn(),
-        error: jest.fn(),
-      };
+      logger.log = jest.fn();
+      logger.warn = jest.fn();
+      logger.error = jest.fn();
 
       options = {
-        data: `${process.cwd()}/mockoon-unit-test/mockoon-unit-test.json`,
         pname: "mockoon-unit-test",
         port: 1025,
       };
@@ -232,11 +227,11 @@ describe("index file", () => {
           },
         },
       };
-
-      process.env = { ...originalProcessEnv, WEBPACK_SERVE: true };
     });
 
     test("should be print the option object", () => {
+      options.data = `${process.cwd()}/mockoon-unit-test/mockoon-unit-test.json`;
+
       jest.spyOn(mockoonWebpackPlugin, "optionsHandler").mockResolvedValue({
         ...options,
         daemonOff: true,
@@ -245,10 +240,10 @@ describe("index file", () => {
       try {
         mockoonWebpackPlugin.apply(compiler);
 
-        expect(console.log).toHaveBeenCalled();
+        expect(logger.log).toHaveBeenCalled();
         expect(mockoon.run).toHaveBeenCalled();
       } catch (error) {
-        expect(console.error).not.toHaveBeenCalled();
+        expect(logger.error).not.toHaveBeenCalled();
       }
     });
 
@@ -262,10 +257,10 @@ describe("index file", () => {
 
       try {
         mockoonWebpackPlugin.apply(compiler);
-        expect(console.log).not.toHaveBeenCalled();
-        expect(mockoon.run).not.toHaveBeenCalled();
+        expect(logger.log).not.toHaveBeenCalled();
+        expect(mockoon.run).toHaveBeenCalled();
       } catch (error) {
-        // TODO:
+        expect(logger.error).toHaveBeenCalled();
       }
     });
 
@@ -274,9 +269,6 @@ describe("index file", () => {
     });
 
     afterAll(() => {
-      // eslint-disable-next-line
-      console = consoleObject;
-
       process.env = originalProcessEnv;
     });
   });
@@ -288,14 +280,14 @@ describe("index file", () => {
       mockoonWebpackPlugin = null;
       expect(mockoonWebpackPlugin).toBeNull();
 
+      process.env = { ...originalProcessEnv, WEBPACK_SERVE: undefined };
+
       options = {
         pname: "mockoon-unit-test",
         port: 1025,
       };
 
       mockoonWebpackPlugin = new MockoonWebpackPlugin([options]);
-
-      process.env = { ...originalProcessEnv, WEBPACK_SERVE: undefined };
     });
 
     test("should be not call", () => {

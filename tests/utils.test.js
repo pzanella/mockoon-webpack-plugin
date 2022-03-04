@@ -4,7 +4,7 @@ jest.mock("../dist/logger.js");
 
 describe("utils file", () => {
   describe("createJSONFile()", () => {
-    test("should be returns an error because options is an empty object", () => {
+    test("should be return an error because options is an empty object", () => {
       try {
         const options = {};
         const path = `${process.cwd()}/mockoon_unit-test`;
@@ -16,7 +16,7 @@ describe("utils file", () => {
       }
     });
 
-    test("should be returns an error because options is undefined", () => {
+    test("should be return an error because options is undefined", () => {
       try {
         const options = undefined;
         const path = `${process.cwd()}/mockoon_unit-test`;
@@ -28,7 +28,7 @@ describe("utils file", () => {
       }
     });
 
-    test("should be returns the filepath", () => {
+    test("should be return the filepath", () => {
       const options = {
         mocks: {
           routes: [
@@ -66,7 +66,7 @@ describe("utils file", () => {
       fs.mkdirSync(path);
     });
 
-    test("should be returns empty array", () => {
+    test("should be return empty array", () => {
       const files = utils.hasFiles(path);
       expect(files).toBeDefined();
       expect(Array.isArray(files)).toBeTruthy();
@@ -87,7 +87,7 @@ describe("utils file", () => {
       fs.mkdirSync(path);
     });
 
-    test("should be returns true", () => {
+    test("should be return true", () => {
       const files = utils.isFolderExist(path);
       expect(files).toBeDefined();
       expect(typeof files).toBe("boolean");
@@ -100,13 +100,13 @@ describe("utils file", () => {
   });
 
   describe("getCommandLineArgs()", () => {
-    test("should be returns an empty array", () => {
+    test("should be return an empty array", () => {
       const args = utils.getCommandLineArgs();
       expect(args).toBeDefined();
       expect(args).toEqual([]);
     });
 
-    test("should be returns the arguments array", () => {
+    test("should be return the arguments array", () => {
       let options = {
         data: process.cwd(),
         pname: "mockoon-pname",
@@ -143,12 +143,12 @@ describe("utils file", () => {
   });
 
   describe("getPname()", () => {
-    test("should be returns undefined", () => {
+    test("should be return undefined", () => {
       const pname = utils.getPname();
       expect(pname).toBeUndefined();
     });
 
-    test("should be returns 'mockoon-pname'", () => {
+    test("should be return 'mockoon-pname'", () => {
       const options = {
         pname: "mockoon-pname",
       };
@@ -167,7 +167,7 @@ describe("utils file", () => {
   });
 
   describe("getPort()", () => {
-    test("should be returns random value", async () => {
+    test("should be return random value", async () => {
       let port = await utils.getPort();
       expect(port).toBeDefined();
       expect(typeof port).toBe("number");
@@ -181,7 +181,7 @@ describe("utils file", () => {
       expect(typeof port).toBe("number");
     });
 
-    test("should be returns options.port", async () => {
+    test("should be return options.port", async () => {
       const options = {
         port: 1025,
       };
@@ -196,7 +196,7 @@ describe("utils file", () => {
       expect(port).toBe(1025);
     });
 
-    test("should be returns an error", () => {
+    test("should be return an error", () => {
       const options = {
         port: 1025,
       };
