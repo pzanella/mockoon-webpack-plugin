@@ -50,13 +50,6 @@ describe("index file", () => {
     test("should be return undefined", async () => {
       let opt = await mockoonWebpackPlugin.optionsHandler();
       expect(opt).toBeUndefined();
-
-      opt = await mockoonWebpackPlugin.optionsHandler(
-        option,
-        devServer,
-        "fakeFolder"
-      );
-      expect(opt).toBeUndefined();
     });
 
     test("should be return the option object (without data attribute)", async () => {

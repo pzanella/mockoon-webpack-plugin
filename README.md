@@ -23,7 +23,7 @@ yarn add --dev mockoon-webpack-plugin
     const webpackConfig = {
         plugins: [
             new MockoonWebpackPlugin({
-                data: "./mockoon/api.json",
+                data: ".mockoon/api.json",
                 pname: "mockoon-api",
                 port: 1025 
             });
@@ -147,16 +147,15 @@ Multi mock servers (e.g. 3):
                 port: "5000"
             }, {
                 mocks: {
-                    mocks: {
-                        routes: [{
-                                method: "GET",
-                                endpoint: "api/user",
-                                responses: [{
-                                body: "{ id: 1234, firstname: 'John', surname: 'Doe' }",
-                                statusCode: 200
-                            }]
-                        }],
-                        cors: true
+                    routes: [{
+                            method: "GET",
+                            endpoint: "api/user",
+                            responses: [{
+                            body: "{ id: 1234, firstname: 'John', surname: 'Doe' }",
+                            statusCode: 200
+                        }]
+                    }],
+                    cors: true
                 },
                 pname: "mockoon-example-3",
                 port: "5050"

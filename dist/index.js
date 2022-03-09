@@ -65,8 +65,7 @@ class MockoonWebpackPlugin {
   async optionsHandler(option = {}, devServer = {}, path) {
     if (
       Object.keys(option).length === 0 ||
-      Object.keys(devServer).length === 0 ||
-      !utils.isFolderExist(path)
+      Object.keys(devServer).length === 0
     ) {
       return;
     }
