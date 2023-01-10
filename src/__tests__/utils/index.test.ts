@@ -1,6 +1,6 @@
-const fs = require("fs");
-const utils = require("../dist/utils");
-jest.mock("../dist/logger.js");
+import fs from "fs";
+import utils from "../../utils";
+jest.mock("../../logger");
 
 describe("utils file", () => {
   describe("createJSONFile()", () => {
@@ -107,7 +107,7 @@ describe("utils file", () => {
     });
 
     test("should be return the arguments array", () => {
-      let options = {
+      const options = {
         data: process.cwd(),
         pname: "mockoon-pname",
         port: 3000,

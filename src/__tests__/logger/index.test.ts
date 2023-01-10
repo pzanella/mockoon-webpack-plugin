@@ -1,4 +1,4 @@
-const { logger } = require("../dist/logger");
+import logger from "../../logger";
 
 describe("logger file", () => {
     let consoleObject;
@@ -6,11 +6,9 @@ describe("logger file", () => {
     beforeAll(() => {
         consoleObject = console;
 
-        console = {
-            log: jest.fn(),
-            warn: jest.fn(),
-            error: jest.fn()
-        };
+        console.log = jest.fn();
+        console.warn = jest.fn();
+        console.error = jest.fn();
     });
 
     test("log()", () => {

@@ -1,10 +1,13 @@
 module.exports = {
   verbose: true,
-  testMatch: ["**/tests/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+  transform: {
+    "^.+\\.(t|j)sx?$": "ts-jest"
+  },
+  modulePathIgnorePatterns: ["<rootDir>/lib/"],
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   collectCoverageFrom: [
-    "dist/**/*.js",
-    "!dist/constants.js",
-    "!dist/schema.json",
+    "src/**/*.ts"
   ],
   coverageThreshold: {
     global: {

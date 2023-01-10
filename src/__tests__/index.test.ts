@@ -1,14 +1,16 @@
-const fs = require("fs");
+import fs from "fs";
 
+// tslint:disable-next-line
 const mockoon = require("@mockoon/cli");
 jest.mock("@mockoon/cli");
 mockoon.run = jest.fn();
 
-const { MockoonWebpackPlugin } = require("../dist/index");
-const { logger } = require("../dist/logger");
+import { MockoonWebpackPlugin }from "../";
+import logger from "../logger";
 
 describe("index file", () => {
-  let mockoonWebpackPlugin, options;
+  let mockoonWebpackPlugin;
+  let options;
 
   beforeAll(() => {
     options = {
@@ -26,7 +28,9 @@ describe("index file", () => {
   });
 
   describe("optionsHandler()", () => {
-    let option, devServer, path;
+    let option;
+    let devServer;
+    let path;
 
     beforeEach(() => {
       path = `${process.cwd()}/mockoon-unit-test`;
@@ -48,7 +52,7 @@ describe("index file", () => {
     });
 
     test("should be return undefined", async () => {
-      let opt = await mockoonWebpackPlugin.optionsHandler();
+      const opt = await mockoonWebpackPlugin.optionsHandler();
       expect(opt).toBeUndefined();
     });
 
@@ -188,7 +192,7 @@ describe("index file", () => {
       mockoonWebpackPlugin = null;
       expect(mockoonWebpackPlugin).toBeNull();
 
-      process.env = { ...originalProcessEnv, WEBPACK_SERVE: true };
+      process.env = { ...originalProcessEnv, WEBPACK_SERVE: "true" };
 
       logger.log = jest.fn();
       logger.warn = jest.fn();

@@ -38,11 +38,11 @@ class Logger implements ILogger {
     }
 
     public warn(message: string): void {
-        config.warn.background && console.warn(this.heading("warn"), chalk[config.warn.background]("WARNING"), chalk[config.warn.color](message));
+        console.warn(this.heading("warn"), chalk[config.warn.background]("WARNING"), chalk[config.warn.color](message));
     }
 
     public error(message: string): void {
-        config.error.background && console.error(this.heading("error"), chalk[config.error.background]("ERROR"), chalk[config.error.color](message));
+        console.error(this.heading("error"), chalk[config.error.background]("ERROR"), chalk[config.error.color](message));
     }
 }
 
