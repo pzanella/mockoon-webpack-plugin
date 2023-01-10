@@ -3,21 +3,16 @@
   "version": "1.2.1",
   "description": "A Webpack plugin to run Mockoon CLI.",
   "homepage": "https://github.com/pzanella/mockoon-webpack-plugin",
-  "main": "dist/index.js",
+  "types": "./lib/index.d.ts",
+  "main": "./lib/index.js",
   "author": "Pietro Zanella <pietrozanella22@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">= 16.0.0"
+    "node": ">=16.0.0"
   },
   "files": [
-    "dist/constants.js",
-    "dist/index.js",
-    "dist/logger.js",
-    "dist/schema.json",
-    "dist/utils.js",
-    "LICENSE.md",
-    "package.json",
-    "README.md"
+    "lib/**/*",
+    "LICENSE.md"
   ],
   "keywords": [
     "webpack",
@@ -32,32 +27,30 @@
     "test:coverage": "jest --coverage",
     "badges": "generateBadges",
     "prepare": "husky install",
-    "release": "np --tag"
+    "release": "np --tag",
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npx tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json"
   },
   "dependencies": {
-    "@mockoon/cli": "^1.5.1",
+    "@mockoon/cli": "^2.2.1",
     "chalk": "4.1.2",
     "find-free-ports": "^3.0.0",
     "schema-utils": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/preset-env": "^7.16.11",
-    "eslint": "^8.9.0",
-    "eslint-plugin-jest": "^26.1.1",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
-    "lint-staged": "^12.3.4",
     "node-jest-badges": "^1.3.1",
     "np": "^7.6.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.8.2",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.9.4"
   },
   "peerDependencies": {
-    "webpack": ">=4.0.0 <6.0.0"
-  },
-  "resolutions": {
-    "uuid": "^8.3.2",
-    "ansi-regex": "^5.0.1"
+    "webpack": ">=4.0.0"
   },
   "repository": {
     "type": "git",
@@ -65,11 +58,5 @@
   },
   "bugs": {
     "url": "https://github.com/pzanella/mockoon-webpack-plugin/issues"
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint",
-      "prettier --write"
-    ]
   }
 }

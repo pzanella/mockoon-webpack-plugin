@@ -1,4 +1,6 @@
-{
+import { JSONSchema7 } from "schema-utils/declarations/validate";
+
+export const schema: JSONSchema7 = {
     "title": "Mockoon Webpack plugin",
     "description": "This plugin allow to handle Mockoon servers.",
     "type": "object",
