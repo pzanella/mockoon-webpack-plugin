@@ -15,7 +15,7 @@
   "author": "Pietro Zanella <pietrozanella22@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.10.0"
   },
   "files": [
     "lib/**/*",
@@ -30,7 +30,6 @@
     "mockoon-webpack-plugin"
   ],
   "scripts": {
-    "badges": "generateBadges",
     "clean": "rm -rf ./lib",
     "build": "npm run clean && npx tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
@@ -47,8 +46,7 @@
   "dependencies": {
     "@mockoon/cli": "^2.2.1",
     "chalk": "4.1.2",
-    "find-free-ports": "^3.0.0",
-    "schema-utils": "^4.0.0"
+    "find-free-ports": "^3.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.2.5",

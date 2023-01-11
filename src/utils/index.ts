@@ -1,19 +1,16 @@
 import fs from "fs";
 import { findFreePorts, isFreePort } from "find-free-ports";
 import logger from "../logger";
-import globalConfig from "../config";
+import globalConfig, { IMockoonWebpackPlugin } from "../config";
+import path from "path";
 
-const createJSONFile = (option: any = {}, pathFile: string) => {
-    if (Object.entries(option).length === 0) {
-        return new Error("The object is empty!");
-    }
-
+const createJSONFile = (option: IMockoonWebpackPlugin, pathFile: string) => {
     createFolder(pathFile);
 
-    const { mocks: content, pname } = option;
+    const { data, pname } = option;
     const filepath = `${pathFile}/${pname}.json`;
 
-    fs.writeFileSync(filepath, JSON.stringify(content));
+    fs.writeFileSync(filepath, JSON.stringify(data));
     return filepath;
 };
 
@@ -21,7 +18,21 @@ const isFolderExist = (pathFile: string) => fs.existsSync(pathFile);
 
 const createFolder = (pathFile: string) => !isFolderExist(pathFile) && fs.mkdirSync(pathFile);
 
-const hasFiles = (pathFile: string) => fs.readdirSync(pathFile);
+const hasFiles = (pathFile: string): boolean => {
+    try {
+        return !!(fs.readFileSync(pathFile));
+    } catch (_) {
+        return false;
+    }
+};
+
+const isValidUrl = (url: string): boolean => {
+    try {
+        return !!(new URL(url));
+    } catch (err) {
+        return false;
+    }
+};
 
 const remapOptions = (options = {}) => {
     return Object.entries(options)
@@ -37,14 +48,14 @@ const remapOptions = (options = {}) => {
 const getCommandLineArgs = (options = {}) => {
     const obj = remapOptions(options);
     return Object.entries(obj).reduce((result: string[], [key, value]) => {
-        if (value) {
-            result.push(`--${key}${typeof value !== "boolean" ? `=${value}` : ""}`);
-        }
+        result.push(`--${key}${typeof value !== "boolean" ? `=${value}` : ""}`);
         return result;
     }, []);
 };
 
-const getPname = (option: any = {}) => option.pname?.toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, "-");
+const getPname = (option: any = {}) => option.pname?.toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, "-"); // TODO: change pname calculate
+
+const getAbsolutePath = (filePath: string): string => path.resolve(filePath);
 
 const getPort = async (option: any = {}, devServer: any = {}) => {
     if (Number(option?.port) !== Number(devServer?.port)) {
@@ -63,11 +74,13 @@ const getPort = async (option: any = {}, devServer: any = {}) => {
     }
 };
 
-export default {
+export {
     createJSONFile,
     hasFiles,
     isFolderExist,
     getCommandLineArgs,
     getPname,
     getPort,
+    isValidUrl,
+    getAbsolutePath
 };
