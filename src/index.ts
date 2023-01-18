@@ -19,11 +19,11 @@ export class MockoonWebpackPlugin {
     }
 
     private async optionsHandler(option: IMockoonWebpackPlugin, devServer: any = {}) {
-        const { data, port } = option;
+        const { data, port, pname } = option;
 
         return {
             data: (typeof data === "string" && (hasFiles(data) || isValidUrl(data))) ? getAbsolutePath(data) : await createJSONFile(option, globalConfig.baseDirectory),
-            pname: getPname(option),
+            pname,
             ...((typeof data !== "string" || !!port) && { port: await getPort(option, devServer) }),
             repair: true,
             daemonOff: true,

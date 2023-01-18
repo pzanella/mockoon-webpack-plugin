@@ -26,9 +26,10 @@ const hasFiles = (pathFile: string): boolean => {
     }
 };
 
-const isValidUrl = (url: string): boolean => {
+const isValidUrl = (urlString: string): boolean => {
     try {
-        return !!(new URL(url));
+        const url = new URL(urlString);
+        return ["http:", "https:"].includes(url.protocol);
     } catch (err) {
         return false;
     }

@@ -15,7 +15,7 @@
   "author": "Pietro Zanella <pietrozanella22@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=16.10.0"
+    "node": ">=16.0.0"
   },
   "files": [
     "lib/**/*",
