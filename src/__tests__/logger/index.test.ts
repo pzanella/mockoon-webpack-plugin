@@ -1,38 +1,38 @@
-import logger from "../../logger";
+import logger from '../../logger';
 
-describe("logger file", () => {
-    let consoleObject;
+describe('logger file', () => {
+  let consoleObject;
 
-    beforeAll(() => {
-        consoleObject = console;
+  beforeAll(() => {
+    consoleObject = console;
 
-        console.log = jest.fn();
-        console.warn = jest.fn();
-        console.error = jest.fn();
-    });
+    console.log = jest.fn();
+    console.warn = jest.fn();
+    console.error = jest.fn();
+  });
 
-    test("log()", () => {
-        const msg = "Log message!";
-        logger.log(msg);
+  test('log()', () => {
+    const msg = 'Log message!';
+    logger.log(msg);
 
-        expect(console.log).toHaveBeenCalled();
-    });
+    expect(console.log).toHaveBeenCalled();
+  });
 
-    test("warn()", () => {
-        const msg = "Warn message!";
-        logger.warn(msg);
+  test('warn()', () => {
+    const msg = 'Warn message!';
+    logger.warn(msg);
 
-        expect(console.warn).toHaveBeenCalled();
-    });
+    expect(console.warn).toHaveBeenCalled();
+  });
 
-    test("error()", () => {
-        const msg = "Error message!";
-        logger.error(msg);
+  test('error()', () => {
+    const msg = 'Error message!';
+    logger.error(msg);
 
-        expect(console.error).toHaveBeenCalled();
-    });
+    expect(console.error).toHaveBeenCalled();
+  });
 
-    afterAll(() => {
-        console = consoleObject;
-    });
+  afterAll(() => {
+    console = consoleObject;
+  });
 });
