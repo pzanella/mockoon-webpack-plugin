@@ -1,6 +1,6 @@
 {
   "name": "mockoon-webpack-plugin",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A Webpack plugin based on Mockoon CLI.",
   "homepage": "https://github.com/pzanella/mockoon-webpack-plugin",
   "repository": {
