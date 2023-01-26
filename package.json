@@ -41,7 +41,7 @@
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
-    "release": "np --tag"
+    "release": "np"
   },
   "dependencies": {
     "@mockoon/cli": "^2.2.1",
