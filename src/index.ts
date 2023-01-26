@@ -19,14 +19,14 @@ import globalConfig, { IMockoonWebpackPlugin } from './config';
  */
 export class MockoonWebpackPlugin {
   private options: IMockoonWebpackPlugin[];
-  private optionsList: any;
+  private optionsList;
 
   constructor(options: IMockoonWebpackPlugin[]) {
     this.options = !Array.isArray(options) ? [options] : options;
-    this.optionsList = new Map();
+    this.optionsList = new Map<string, object>();
   }
 
-  private async optionsHandler(option: IMockoonWebpackPlugin, devServer: any = {}) {
+  private async optionsHandler(option: IMockoonWebpackPlugin) {
     const { data, port } = option;
     let _toDelete = false;
 
@@ -59,10 +59,7 @@ export class MockoonWebpackPlugin {
     compiler.hooks.initialize.tap(globalConfig.pluginName, async () => {
       try {
         for (const option of this.options) {
-          const { data, pname, port, repair, daemonOff, _toDelete } = await this.optionsHandler(
-            option,
-            compiler.options?.devServer,
-          );
+          const { data, pname, port, repair, daemonOff, _toDelete } = await this.optionsHandler(option);
 
           if (port) {
             this.optionsList.set(pname, { data, pname, repair, port, daemonOff });

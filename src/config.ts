@@ -1,4 +1,5 @@
 import path from 'path';
+import * as packageInfo from "../package.json";
 
 type GlobalConfigType = {
   pluginName: string;
@@ -12,7 +13,7 @@ type GlobalConfigType = {
 
 const globalConfig: GlobalConfigType = {
   pluginName: 'MockoonWebpackPlugin',
-  version: require('../package.json').version,
+  version: packageInfo.version,
   baseDirectory: path.resolve(process.cwd(), 'mockoon'),
   remapping: {
     log: 'log-transaction',

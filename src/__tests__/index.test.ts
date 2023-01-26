@@ -1,9 +1,9 @@
 import fs from 'fs';
 
-// tslint:disable-next-line
-const mockoon = require('@mockoon/cli');
-jest.mock('@mockoon/cli');
-mockoon.run = jest.fn();
+import * as mockoon from '@mockoon/cli';
+jest.mock('@mockoon/cli', () => ({
+  run: jest.fn()
+}));
 
 import { MockoonWebpackPlugin } from '..';
 import { IMockoonWebpackPlugin } from '../config';

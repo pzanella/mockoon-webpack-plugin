@@ -33,7 +33,7 @@ class Logger implements ILogger {
     return chalk[config[level].color].bold(globalConfig.pluginName, globalConfig.version);
   }
 
-  public log(message: any): void {
+  public log(message: string): void {
     console.log(this.heading(), chalk[config.log.color](message));
   }
 

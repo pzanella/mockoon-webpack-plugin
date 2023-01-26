@@ -49,7 +49,7 @@ const getCommandLineArgs = (options = {}) => {
   }, []);
 };
 
-const getPname = (option: any = {}) => {
+const getPname = (option: IMockoonWebpackPlugin) => {
   const { pname } = option;
   if (!pname) {
     return uuidv1();

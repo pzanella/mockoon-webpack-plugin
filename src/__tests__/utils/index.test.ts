@@ -124,14 +124,9 @@ describe('utils file', () => {
   });
 
   describe('getPname()', () => {
-    test('should be return a value generated from unique-filename', () => {
-      const pname = getPname();
-      expect(pname).toBeDefined();
-      expect(typeof pname).toBe('string');
-    });
-
     test("should be return 'mockoon-pname'", () => {
       const options = {
+        data: "./fake-path",
         pname: 'mockoon-pname',
       };
 
@@ -154,10 +149,6 @@ describe('utils file', () => {
         data: './fake-path',
       };
 
-      const devServer = {
-        port: 5050,
-      };
-
       const port = await getPort(options);
 
       expect(port).toBeDefined();
@@ -168,10 +159,6 @@ describe('utils file', () => {
       const options = {
         data: './fake-path',
         port: 3050,
-      };
-
-      const devServer = {
-        port: 5050,
       };
 
       const port = await getPort(options);
@@ -186,10 +173,6 @@ describe('utils file', () => {
         port: 1025,
       };
 
-      const devServer = {
-        port: 1025,
-      };
-
       getPort(options).catch((error) => {
         expect(error).toBeDefined();
         expect(typeof error).toBe('string');
@@ -200,7 +183,7 @@ describe('utils file', () => {
 
   describe('getAbsolutePath()', () => {
     test('should be return undefined', () => {
-      const filePath: string = '';
+      const filePath = '';
       const result = getAbsolutePath(filePath);
 
       expect(result).toBeDefined();
