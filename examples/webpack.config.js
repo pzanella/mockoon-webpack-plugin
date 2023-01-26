@@ -31,19 +31,44 @@ module.exports = {
         }, {
             // Define the object to describe the API and spacify the port
             data: {
-                routes: [{
-                    method: "GET",
-                    endpoint: "/getUsers",
-                    responses: [{
-                        body: JSON.stringify([{ 
-                            id: 1, 
-                            name: "John", 
-                            surname: "Doe"
-                        }]),
-                        statusCode: 200,
-                    }],
-                    cors: true
-                }]
+                routes: [
+                    {
+                        method: 'GET',
+                        endpoint: '/getUsers',
+                        responses: [
+                            {
+                                body: JSON.stringify([
+                                    {
+                                        id: 1,
+                                        name: 'Sto cazzo',
+                                        surname: 'Doe',
+                                    },
+                                ]),
+                                statusCode: 200,
+                            }
+                        ],
+                        cors: true,
+                    },
+                    {
+                        method: "GET",
+                        endpoint: "/getCars",
+                        responses: [{
+                            body: JSON.stringify([{
+                                id: 1,
+                                make: "Toyota",
+                                model: "Corolla",
+                                fuel_type: "electricity"
+                            }, {
+                                id: 2,
+                                make: "Audi",
+                                model: "A4",
+                                fuel_type: "gas"
+                            }]),
+                            statusCode: 200
+                        }],
+                        cors: true
+                    }
+                ]
             },
             port: 5055
         }])
