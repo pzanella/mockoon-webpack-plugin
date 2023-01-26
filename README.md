@@ -22,9 +22,7 @@ module.exports = {
     plugins: [
         ...
         new MockoonWebpackPlugin({
-            data: "<FILE | URL | OBJECT>",
-            pname: "<PROCESS NAME>",
-            port: "<PORT>" 
+            data: "<FILE PATH or FILE URL or OBJECT>"
         });
     ]
 };
@@ -32,7 +30,7 @@ module.exports = {
 
 ## Options
 
-- **data** (required), you can specify the absolute or relative path of a Mockoon file, or an url to Mockoon file or an object like this:
+- **data** (<span style="color:red">**required**</span>), you can specify the absolute or relative path of a Mockoon file, or an url to Mockoon file or an object like this:
     ```js
     data: {
         routes: [{
@@ -66,8 +64,8 @@ module.exports = {
         }],
     }
     ```
-- **pname** (optional), process name (if not specified the plugin will create a unique name)
-- **port** (optional), evironment's port (if not specified the plugin will search a free port)
+- **pname** (*optional*), process name (if not specified the plugin will create a unique name)
+- **port** (*optional*), evironment's port (if not specified the plugin will search a free port)
 
 ## Example Webpack Config
 See [examples](./examples/) folder.
