@@ -3,8 +3,9 @@ import { findFreePorts, isFreePort } from "find-free-ports";
 import logger from "../logger";
 import globalConfig, { IMockoonWebpackPlugin } from "../config";
 import path from "path";
+import uniqueFilename from "unique-filename";
 
-const createJSONFile = (option: IMockoonWebpackPlugin, pathFile: string) => {
+const createJSONFile = (option: IMockoonWebpackPlugin, pathFile: string): string => {
     createFolder(pathFile);
 
     const { data, pname } = option;
@@ -18,19 +19,12 @@ const isFolderExist = (pathFile: string) => fs.existsSync(pathFile);
 
 const createFolder = (pathFile: string) => !isFolderExist(pathFile) && fs.mkdirSync(pathFile);
 
+const deleteFile = (pathFile: string) => fs.unlinkSync(pathFile);
+
 const hasFiles = (pathFile: string): boolean => {
     try {
         return !!(fs.readFileSync(pathFile));
     } catch (_) {
-        return false;
-    }
-};
-
-const isValidUrl = (urlString: string): boolean => {
-    try {
-        const url = new URL(urlString);
-        return ["http:", "https:"].includes(url.protocol);
-    } catch (err) {
         return false;
     }
 };
@@ -41,8 +35,9 @@ const remapOptions = (options = {}) => {
             if (key in globalConfig.remapping) {
                 return { [globalConfig.remapping[key]]: value };
             }
-            return { [key]: value };
+            return !!value && { [key]: value };
         })
+        .filter(opt => opt)
         .reduce((obj, item) => ({ ...obj, ...item }), {});
 };
 
@@ -54,24 +49,26 @@ const getCommandLineArgs = (options = {}) => {
     }, []);
 };
 
-const getPname = (option: any = {}) => option.pname?.toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, "-"); // TODO: change pname calculate
+const getPname = (option: any = {}) => {
+    const { pname } = option;
+    if (!pname) {
+        return uniqueFilename("");
+    }
+    return pname.toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, "-");
+};
 
 const getAbsolutePath = (filePath: string): string => path.resolve(filePath);
 
-const getPort = async (option: any = {}, devServer: any = {}) => {
-    if (Number(option?.port) !== Number(devServer?.port)) {
-        let { port } = option;
-        if (port && (await isFreePort(port))) {
-            return port;
-        } else {
-            [port] = await findFreePorts();
-            logger.warn(
-                `The port ${port} is free, please change it in your code or modify port's value in plugin's configuration!`
-            );
-            return port;
-        }
+const getPort = async (option: IMockoonWebpackPlugin) => {
+    let { port } = option;
+    if (port && (await isFreePort(port))) {
+        return port;
     } else {
-        return new Error(`The port ${option?.port} equals to Webpack.devServer.port, please change it!`);
+        [port] = await findFreePorts();
+        logger.warn(
+            `The port ${port} is free, set this value in your mockoon-webpack-plugin!`
+        );
+        return port;
     }
 };
 
@@ -82,6 +79,6 @@ export {
     getCommandLineArgs,
     getPname,
     getPort,
-    isValidUrl,
-    getAbsolutePath
+    getAbsolutePath,
+    deleteFile
 };

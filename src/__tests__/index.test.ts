@@ -5,11 +5,11 @@ const mockoon = require("@mockoon/cli");
 jest.mock("@mockoon/cli");
 mockoon.run = jest.fn();
 
-import { MockoonWebpackPlugin } from "../";
+import { MockoonWebpackPlugin } from "..";
 import { IMockoonWebpackPlugin } from "../config";
 import logger from "../logger";
 
-describe("index file", () => {
+describe("MockoonWebapckPlugin", () => {
     let mockoonWebpackPlugin;
     let options;
 
@@ -17,7 +17,7 @@ describe("index file", () => {
         options = {
             data: `${process.cwd()}/mockoon-unit-test/mockoon-unit-test.json`,
             pname: "mockoon-unit-test",
-            port: 1025,
+            port: 3050,
         };
 
         mockoonWebpackPlugin = new MockoonWebpackPlugin(options);
@@ -52,7 +52,7 @@ describe("index file", () => {
                     }]
                 },
                 pname: "pname-test",
-                port: 1025
+                port: 3050
             };
 
             const opt = await mockoonWebpackPlugin.optionsHandler(
@@ -72,7 +72,7 @@ describe("index file", () => {
 
             expect(opt.port).toBeDefined();
             expect(typeof opt.port).toBe("number");
-            expect(opt.port).toBe(1025);
+            expect(opt.port).toBe(3050);
 
             expect(opt.repair).toBeDefined();
             expect(typeof opt.repair).toBe("boolean");
@@ -184,23 +184,6 @@ describe("index file", () => {
                 expect(mockoon.run).toHaveBeenCalled();
             } catch (error) {
                 expect(logger.error).not.toHaveBeenCalled();
-            }
-        });
-
-        test("should be throw an error", () => {
-            delete options.data;
-
-            jest.spyOn(mockoonWebpackPlugin, "optionsHandler").mockResolvedValue({
-                ...options,
-                daemonOff: true,
-            });
-
-            try {
-                mockoonWebpackPlugin.apply(compiler);
-                expect(logger.log).not.toHaveBeenCalled();
-                expect(mockoon.run).toHaveBeenCalled();
-            } catch (error) {
-                expect(logger.error).toHaveBeenCalled();
             }
         });
 

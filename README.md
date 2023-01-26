@@ -1,9 +1,8 @@
 # mockoon-webpack-plugin
 
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
-[![nodejs-version](https://img.shields.io/badge/node-%3E=16.10.0-4dc71f?logo=nodedotjs)](https://nodejs.org/download/release/v16.10.0/)
 
-A Webpack plugin based on Mockoon CLI that simplifies creation mock(s) server to give APIs on localhost and stop it when close webpack-dev-server.
+A Webpack plugin based on Mockoon CLI (https://mockoon.com/) that simplifies the creation mock(s) server to give APIs on localhost and stop it when close webpack-dev-server.
 
 ## Installation
 ```
@@ -16,148 +15,59 @@ yarn add --dev mockoon-webpack-plugin
 
 ## Usage
 ```js
-    const { MockoonWebpackPlugin } = require("mockoon-webpack-plugin");
+const { MockoonWebpackPlugin } = require("mockoon-webpack-plugin");
 
-    const webpackConfig = {
-        plugins: [
-            new MockoonWebpackPlugin({
-                data: ".mockoon/api.json",
-                pname: "mockoon-api",
-                port: 1025 
-            });
-        ]
-    };
-
-    module.exports = webpackConfig;
+module.exports = {
+    ...
+    plugins: [
+        ...
+        new MockoonWebpackPlugin({
+            data: "<FILE | URL | OBJECT>",
+            pname: "<PROCESS NAME>",
+            port: "<PORT>" 
+        });
+    ]
+};
 ```
 
 ## Options
-```js
-    new MockoonWebpackPlugin({
-        // Path or URL to your Mockoon file
-        data: (optional) string,
-        
-        // Object to define APIs
-        mocks: (optional) {
-            routes: [{
-                method: string,
-                endpoint: string,
-                responses: [{
-                    body: string,
 
-                    latency: (optional) string,
+- **data** (required), you can specify the absolute or relative path of a Mockoon file, or an url to Mockoon file or an object like this:
+    ```js
+    data: {
+        routes: [{
+            method: string,
+            endpoint: string,
+            responses: [{
+                body: string,
 
-                    statusCode: number,
-                    
-                    headers: (optional) [{
-                        key: string,
-                        value: string
-                    }],
+                latency: (optional) string,
 
-                    rules: (optional) [{
-                        target: string,
-                        modifier: string,
-                        value: string,
-                        operator: string
-                    }]
+                statusCode: number,
+                
+                headers: (optional) [{
+                    key: string,
+                    value: string
+                }],
+
+                rules: (optional) [{
+                    target: string,
+                    modifier: string,
+                    value: string,
+                    operator: string
                 }]
-            }],
-            cors: boolean,
+            }]
+        }],
+        cors: boolean,
 
-            headers: (optional) [{
-                key: string,
-                value: string
-            }],
-        },
-
-        // Environment's index in the data file
-        index: (optional) string || number,
-
-        // Environment name in the data file
-        name: (optional) string,
-
-        // Process name
-        pname: string,
-
-        // Evironment's port
-        port: string || number,
-
-        // Override default listening hostname (0.0.0.0)
-        hostname: (optional) string,
-
-        // If the data file seems too old, or an invalid Mockoon file, migrate/repair without prompting
-        repair: (optional) boolean
-    });
-```
-If data or mocks object not specify, the plugin will be search a valid Mockoon's file in ".mockoon" folder at project root; when use mocks object the plugin will be create a valid Mockoon file at project root (.mockoon is the default folder).
+        headers: (optional) [{
+            key: string,
+            value: string
+        }],
+    }
+    ```
+- **pname** (optional), process name (if not specified the plugin will create a unique name)
+- **port** (optional), evironment's port (if not specified the plugin will search a free port)
 
 ## Example Webpack Config
-Single mock server:
-```js
-    const { MockoonWebpackPlugin } = require("mockoon-webpack-plugin");
-    const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-    module.exports = {
-        mode: "development",
-        entry: "PATH-TO-MY-ENTRY-FILE-JS",
-        output: {
-            path: path.resolve(process.cwd(), "dist")
-        },
-        devServer: {
-            static: "./dist",
-            port: 3002,
-            open: true
-        },
-        plugins: [
-            new HtmlWebpackPlugin(),
-            new MockoonWebpackPlugin({
-                data: "PATH-TO-MY-MOCKOON-FILE",
-                pname: "mockoon-example-1",
-                port: "3000"
-            })
-        ]
-    };
-```
-Multi mock servers (e.g. 3):
-```js
-    const { MockoonWebpackPlugin } = require("mockoon-webpack-plugin");
-    const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-    module.exports = {
-        mode: "development",
-        entry: "PATH-TO-MY-ENTRY-FILE-JS",
-        output: {
-            path: path.resolve(process.cwd(), "dist")
-        },
-        devServer: {
-            static: "./dist",
-            port: 3002,
-            open: true
-        },
-        plugins: [
-            new HtmlWebpackPlugin(),
-            new MockoonWebpackPlugin([{
-                pname: "mockoon-example-1",
-                port: "3000"
-            }, {
-                data: "PATH-TO-MY-MOCKOON-FILE",
-                pname: "mockoon-example-2",
-                port: "5000"
-            }, {
-                mocks: {
-                    routes: [{
-                            method: "GET",
-                            endpoint: "api/user",
-                            responses: [{
-                            body: "{ id: 1234, firstname: 'John', surname: 'Doe' }",
-                            statusCode: 200
-                        }]
-                    }],
-                    cors: true
-                },
-                pname: "mockoon-example-3",
-                port: "5050"
-            }])
-        ]
-    };
-```
+See [examples](./examples/) folder.

@@ -7,25 +7,13 @@ import {
     getCommandLineArgs,
     getPname,
     getPort,
-    isValidUrl,
     getAbsolutePath
 } from "../../utils";
+
 jest.mock("../../logger");
 
 describe("utils file", () => {
     describe("createJSONFile()", () => {
-        test("should be return an error because options is undefined", () => {
-            try {
-                const options: IMockoonWebpackPlugin = undefined;
-                const path = `${process.cwd()}/mockoon_unit-test`;
-                createJSONFile(options, path);
-            } catch (error) {
-                expect(error).toBeDefined();
-                expect(typeof error).toBe("object");
-                expect(error.message).toBe("Cannot read property 'data' of undefined");
-            }
-        });
-
         test("should be return the filepath", () => {
             const options: IMockoonWebpackPlugin = {
                 data: {
@@ -136,9 +124,10 @@ describe("utils file", () => {
     });
 
     describe("getPname()", () => {
-        test("should be return undefined", () => {
+        test("should be return a value generated from unique-filename", () => {
             const pname = getPname();
-            expect(pname).toBeUndefined();
+            expect(pname).toBeDefined();
+            expect(typeof pname).toBe("string");
         });
 
         test("should be return 'mockoon-pname'", () => {
@@ -161,36 +150,39 @@ describe("utils file", () => {
 
     describe("getPort()", () => {
         test("should be return random value", async () => {
-            let port = await getPort();
-            expect(port).toBeDefined();
-            expect(typeof port).toBe("number");
+            const options = {
+                data: "./fake-path"
+            };
 
-            const options = {};
             const devServer = {
                 port: 5050,
             };
-            port = await getPort(options, devServer);
+
+            const port = await getPort(options);
+
             expect(port).toBeDefined();
             expect(typeof port).toBe("number");
         });
 
         test("should be return options.port", async () => {
             const options = {
-                port: 1025,
+                data: "./fake-path",
+                port: 3050,
             };
 
             const devServer = {
                 port: 5050,
             };
 
-            const port = await getPort(options, devServer);
+            const port = await getPort(options);
             expect(port).toBeDefined();
             expect(typeof port).toBe("number");
-            expect(port).toBe(1025);
+            expect(port).toBe(3050);
         });
 
         test("should be return an error", () => {
             const options = {
+                data: "./fake-path",
                 port: 1025,
             };
 
@@ -198,33 +190,13 @@ describe("utils file", () => {
                 port: 1025,
             };
 
-            getPort(options, devServer).catch((error) => {
+            getPort(options).catch((error) => {
                 expect(error).toBeDefined();
                 expect(typeof error).toBe("string");
                 expect(error).toBe(
                     "The port 1025 equals to Webpack.devServer.port, please change it!"
                 );
             });
-        });
-    });
-
-    describe("isValidUrl()", () => {
-        test("should be return false", () => {
-            const urlString = "invalidUrl";
-            const result = isValidUrl(urlString);
-
-            expect(result).toBeDefined();
-            expect(result).toBeFalsy();
-            expect(typeof result).toBe("boolean");
-        });
-
-        test("should be return true", () => {
-            const urlString = "https://domain/mockoon-file.json";
-            const result = isValidUrl(urlString);
-
-            expect(result).toBeDefined();
-            expect(result).toBeTruthy();
-            expect(typeof result).toBe("boolean");
         });
     });
 

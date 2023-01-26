@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "incremental": true,
         "target": "es5",
         "module": "commonjs",
         "declaration": true,
@@ -8,9 +7,13 @@
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "incremental": false
     },
     "include": [
         "src"
+    ],
+    "exclude": [
+        "src/__tests__/"
     ]
 }

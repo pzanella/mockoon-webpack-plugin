@@ -54,8 +54,6 @@ type MocksType = {
 
 export type IMockoonWebpackPlugin = {
     data: string | MocksType;
-    name?: string;
-    pname: string;
-    port?: string | number;
-    hostname?: string;
+    pname?: string;
+    port?: number;
 };
