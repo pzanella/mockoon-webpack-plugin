@@ -3,7 +3,7 @@ import { findFreePorts, isFreePort } from 'find-free-ports';
 import logger from '../logger';
 import globalConfig, { IMockoonWebpackPlugin } from '../config';
 import path from 'path';
-import uniqueFilename from 'unique-filename';
+import { v1 as uuidv1 } from 'uuid';
 
 const createJSONFile = (option: IMockoonWebpackPlugin, pathFile: string): string => {
   createFolder(pathFile);
@@ -52,7 +52,7 @@ const getCommandLineArgs = (options = {}) => {
 const getPname = (option: any = {}) => {
   const { pname } = option;
   if (!pname) {
-    return uniqueFilename('');
+    return uuidv1();
   }
   return pname.toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, '-');
 };
