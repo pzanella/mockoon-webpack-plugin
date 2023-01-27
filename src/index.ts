@@ -3,20 +3,6 @@ import logger from './logger';
 import { getPname, createJSONFile, getPort, getCommandLineArgs, hasFiles, getAbsolutePath, deleteFile } from './utils';
 import globalConfig, { IMockoonWebpackPlugin } from './config';
 
-/**
- * @namespace MockoonWebpackPlugin
- * @version 2.0.0
- * @author Pietro Zanella <pietrozanella22@gmail.com>
- *
- * @classdesc
- * MockoonWebpackPlugin is a Webpack plugin based on Mockoon (https://mockoon.com/).
- *
- * @constructor
- * @param {IMockoonWebpackPlugin[]} options
- * @param {(string|MocksType)} options.data - it define the mock source
- * @param {string} [options.pname] - the process name
- * @param {(string)} [options.port] - it define the port
- */
 export class MockoonWebpackPlugin {
   private options: IMockoonWebpackPlugin[];
   private optionsList;

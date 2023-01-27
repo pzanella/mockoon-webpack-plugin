@@ -24,10 +24,21 @@
   "keywords": [
     "webpack",
     "plugin",
+    "mockoon",
     "mockoon-cli",
+    "mock",
+    "mocking",
+    "server",
     "mock-server",
     "local-server",
-    "mockoon-webpack-plugin"
+    "rest",
+    "api",
+    "test",
+    "testing",
+    "json",
+    "dev",
+    "development",
+    "frontend"
   ],
   "scripts": {
     "clean": "rm -rf ./lib",

@@ -19,17 +19,17 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin(),
         new MockoonWebpackPlugin([{
-            // Specify the local path to your Mockoon file
-            data: "<LOCAL-PATH-TO-MY-MOCKOON-FILE>"
+            // You specify the local path to your Mockoon's file
+            data: "./relative/path/to/mockoon/file"
         }, {
-            // Specify the url to your Mockoon file
-            data: "https://<URL-TO-MY-MOCKOON-FILE>"
+            // You specify the url to your Mockoon's file
+            data: "https://url/to/mockoon/file"
         }, {
-            // Specify the local path to your Mockoon file and override the port with the specific value
-            data: "<LOCAL-PATH-TO-MY-MOCKOON-FILE>",
+            // You specify the local path to your Mockoon's file and override the port
+            data: "/absolute/path/to/mockoon/local/file",
             port: 5055
         }, {
-            // Define the object to describe the API and spacify the port
+            // You define an object that to describe the API and the HTTP port
             data: {
                 routes: [
                     {
@@ -40,7 +40,7 @@ module.exports = {
                                 body: JSON.stringify([
                                     {
                                         id: 1,
-                                        name: 'Sto cazzo',
+                                        name: 'John',
                                         surname: 'Doe',
                                     },
                                 ]),
@@ -70,7 +70,7 @@ module.exports = {
                     }
                 ]
             },
-            port: 5055
+            port: 1026
         }])
     ],
 };
