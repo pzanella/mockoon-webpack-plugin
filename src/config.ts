@@ -1,5 +1,5 @@
 import path from 'path';
-import * as packageInfo from "../package.json";
+import * as packageInfo from '../package.json';
 
 type GlobalConfigType = {
   pluginName: string;

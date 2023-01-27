@@ -126,7 +126,7 @@ describe('utils file', () => {
   describe('getPname()', () => {
     test("should be return 'mockoon-pname'", () => {
       const options = {
-        data: "./fake-path",
+        data: './fake-path',
         pname: 'mockoon-pname',
       };
 

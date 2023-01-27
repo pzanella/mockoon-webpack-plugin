@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import * as mockoon from '@mockoon/cli';
 jest.mock('@mockoon/cli', () => ({
-  run: jest.fn()
+  run: jest.fn(),
 }));
 
 import { MockoonWebpackPlugin } from '..';
