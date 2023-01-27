@@ -40,7 +40,7 @@ module.exports = {
                                 body: JSON.stringify([
                                     {
                                         id: 1,
-                                        name: 'Sto cazzo',
+                                        name: 'John',
                                         surname: 'Doe',
                                     },
                                 ]),
