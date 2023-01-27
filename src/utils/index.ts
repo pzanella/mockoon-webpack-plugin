@@ -54,7 +54,7 @@ const getPname = (option: IMockoonWebpackPlugin) => {
   if (!pname) {
     return uuidv1();
   }
-  return pname.toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, '-');
+  return pname.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-');
 };
 
 const getAbsolutePath = (filePath: string): string => path.resolve(filePath);

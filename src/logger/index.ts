@@ -30,7 +30,7 @@ const config: Record<LevelsType, ConfigType> = {
 
 class Logger implements ILogger {
   private heading(level: LevelsType = 'log') {
-    return chalk[config[level].color].bold(globalConfig.pluginName, globalConfig.version);
+    return chalk[config[level].color].bold(globalConfig.pluginName);
   }
 
   public log(message: string): void {
